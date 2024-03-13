@@ -19,14 +19,20 @@ export default function TaskBoard() {
 
     const [showModal, setShowModal] = useState(true)
 
-    function handleAddTask() {
-        console.log("Clicked!")
+    function handleAddTask(newTask) {
+        console.log(newTask)
+        setTasks([
+            ...tasks,
+            newTask
+        ])
+        setShowModal(false)
+
     }
 
     return (
         <Fragment>
 
-            {showModal && <TaskModal />}
+            {showModal && <TaskModal onSaveTask={handleAddTask} />}
 
             <section className="mb-20" id="tasks">
 
@@ -38,7 +44,7 @@ export default function TaskBoard() {
                         <div className="mb-14 items-center justify-between sm:flex">
                             <h2 className="text-2xl font-semibold max-sm:mb-4">Your Tasks</h2>
                             {/* Task actions */}
-                            <TaskActions onAddTask={handleAddTask} />
+                            <TaskActions onAddTask={()=>setShowModal(true)} />
                         </div>
                         <div className="overflow-auto">
                             <table className="table-fixed overflow-auto xl:w-full">

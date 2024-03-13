@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 
-export default function TaskActions({ onAddTask }) {
+export default function TaskActions({onAddTask}) {
     return (
         <Fragment>
             <div className="flex items-center space-x-5">
