@@ -7,7 +7,6 @@ export default function TaskList({ tasks }) {
             {tasks.map((task) => (
                 <tr key={task.id} className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2">
 
-
                     <td>{task.isFavourite ? <FaStar className="text-xl" color="yellow" /> : < FaStar className="text-xl" color="gray" />}</td>
                     <td>{task.title}</td>
                     <td>

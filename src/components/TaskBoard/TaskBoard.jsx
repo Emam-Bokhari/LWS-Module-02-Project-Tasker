@@ -2,6 +2,7 @@ import { Fragment, useState } from "react";
 import Searchbox from "./Searchbox";
 import TaskActions from "./TaskActions";
 import TaskList from "./TaskList";
+import TaskModal from "./TaskModal";
 
 export default function TaskBoard() {
 
@@ -16,8 +17,17 @@ export default function TaskBoard() {
 
     const [tasks, setTasks] = useState([defaultTask])
 
+    const [showModal, setShowModal] = useState(true)
+
+    function handleAddTask() {
+        console.log("Clicked!")
+    }
+
     return (
         <Fragment>
+
+            {showModal && <TaskModal />}
+
             <section className="mb-20" id="tasks">
 
                 <div className="container">
@@ -28,7 +38,7 @@ export default function TaskBoard() {
                         <div className="mb-14 items-center justify-between sm:flex">
                             <h2 className="text-2xl font-semibold max-sm:mb-4">Your Tasks</h2>
                             {/* Task actions */}
-                            <TaskActions />
+                            <TaskActions onAddTask={handleAddTask} />
                         </div>
                         <div className="overflow-auto">
                             <table className="table-fixed overflow-auto xl:w-full">
