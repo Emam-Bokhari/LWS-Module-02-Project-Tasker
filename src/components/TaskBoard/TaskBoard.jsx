@@ -36,8 +36,16 @@ export default function TaskBoard() {
 
     // delete task
     function handleDeleteTask(taskId) {
-        const filteredTask=tasks.filter(task=>task.id!==taskId)
+        const filteredTask = tasks.filter(task => task.id !== taskId)
         setTasks(filteredTask)
+    }
+
+    // delete all task
+    function handleDeleteAllTask() {
+        tasks.length = 0
+        setTasks([
+            ...tasks
+        ])
     }
 
 
@@ -56,7 +64,7 @@ export default function TaskBoard() {
                         <div className="mb-14 items-center justify-between sm:flex">
                             <h2 className="text-2xl font-semibold max-sm:mb-4">Your Tasks</h2>
                             {/* Task actions */}
-                            <TaskActions onAddTask={() => setShowModal(true)} />
+                            <TaskActions onAddTask={() => setShowModal(true)} onDeleteAllTask={handleDeleteAllTask} />
                         </div>
                         <div className="overflow-auto">
                             <table className="table-fixed overflow-auto xl:w-full">
