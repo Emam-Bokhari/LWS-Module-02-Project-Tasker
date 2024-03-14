@@ -5,7 +5,19 @@ export default function TaskList({ tasks, onDeleteTask }) {
     return (
         <Fragment>
             {tasks.map((task) => (
-                <tr key={task.id} className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2">
+                <table key={task.id}  className="table-fixed overflow-auto xl:w-full">
+                <thead>
+                    <tr>
+                        <th className="p-4 pb-8 text-sm font-semibold capitalize w-[48px]"></th>
+                        <th className="p-4 pb-8 text-sm font-semibold capitalize w-[300px]"> Title </th>
+                        <th className="p-4 pb-8 text-sm font-semibold capitalize w-full"> Description </th>
+                        <th className="p-4 pb-8 text-sm font-semibold capitalize md:w-[350px]"> Tags </th>
+                        <th className="p-4 pb-8 text-sm font-semibold capitalize md:w-[100px]"> Priority </th>
+                        <th className="p-4 pb-8 text-sm font-semibold capitalize md:w-[100px]"> Options </th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2">
 
                     <td>{task.isFavourite ? <FaStar className="text-xl" color="yellow" /> : < FaStar className="text-xl" color="gray" />}</td>
                     <td>{task.title}</td>
@@ -31,13 +43,15 @@ export default function TaskList({ tasks, onDeleteTask }) {
                             <button 
                             onClick={()=>onDeleteTask(task.id)}
                             className="text-red-500">Delete</button>
-                            <button className="text-blue-500">Edit</button>
+                            <button className="text-blue-500">Edit</button> 
                         </div>
                     </td>
 
 
 
                 </tr>
+                </tbody>
+                            </table>
             ))}
 
         </Fragment>

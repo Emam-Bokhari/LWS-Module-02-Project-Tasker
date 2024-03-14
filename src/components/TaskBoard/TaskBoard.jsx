@@ -1,4 +1,5 @@
 import { Fragment, useState } from "react";
+import NoTaskFound from "../NoTaskFound";
 import Searchbox from "./Searchbox";
 import TaskActions from "./TaskActions";
 import TaskList from "./TaskList";
@@ -19,6 +20,7 @@ export default function TaskBoard() {
 
     const [showModal, setShowModal] = useState(false)
 
+    // add new task
     function handleAddTask(newTask) {
         console.log(newTask)
         setTasks([
@@ -34,7 +36,7 @@ export default function TaskBoard() {
         setShowModal(false)
     }
 
-    // delete task
+    // delete a task
     function handleDeleteTask(taskId) {
         const filteredTask = tasks.filter(task => task.id !== taskId)
         setTasks(filteredTask)
@@ -67,23 +69,17 @@ export default function TaskBoard() {
                             <TaskActions onAddTask={() => setShowModal(true)} onDeleteAllTask={handleDeleteAllTask} />
                         </div>
                         <div className="overflow-auto">
-                            <table className="table-fixed overflow-auto xl:w-full">
-                                <thead>
-                                    <tr>
-                                        <th className="p-4 pb-8 text-sm font-semibold capitalize w-[48px]"></th>
-                                        <th className="p-4 pb-8 text-sm font-semibold capitalize w-[300px]"> Title </th>
-                                        <th className="p-4 pb-8 text-sm font-semibold capitalize w-full"> Description </th>
-                                        <th className="p-4 pb-8 text-sm font-semibold capitalize md:w-[350px]"> Tags </th>
-                                        <th className="p-4 pb-8 text-sm font-semibold capitalize md:w-[100px]"> Priority </th>
-                                        <th className="p-4 pb-8 text-sm font-semibold capitalize md:w-[100px]"> Options </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {/* Task list */}
-                                    <TaskList tasks={tasks} onDeleteTask={handleDeleteTask} />
 
-                                </tbody>
-                            </table>
+                            {/* Task list */}
+                            {tasks.length > 0
+                                ?
+                                <TaskList tasks={tasks} onDeleteTask={handleDeleteTask} />
+                                :
+                                <NoTaskFound />
+                            }
+
+
+
                         </div>
                     </div>
                 </div>
