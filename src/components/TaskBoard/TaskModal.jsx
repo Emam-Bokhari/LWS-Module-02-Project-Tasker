@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
 
-export default function TaskModal({onSaveTask}) {
+export default function TaskModal({ onSaveTask, onCancel }) {
 
     const [task, setTask] = useState({
         id: crypto.randomUUID(),
@@ -16,6 +16,7 @@ export default function TaskModal({onSaveTask}) {
         let value = event.target.value
         if (name === "tags") {
             value = value.split(",")
+            console.log(value)
         }
         setTask({
             ...task,
@@ -101,9 +102,17 @@ export default function TaskModal({onSaveTask}) {
                     </div>
                 </div>
                 {/* <!-- inputs ends --> */}
-                <div className="mt-16 flex justify-center lg:mt-20">
-                    <button 
-                    onClick={()=>onSaveTask(task)}
+                <div className="mt-16 flex justify-center gap-10 lg:mt-20">
+                    <button
+                        onClick={onCancel}
+                        type="submit"
+                        className="rounded bg-red-600 px-4 py-2 text-white transition-all hover:opacity-80"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        onClick={() => onSaveTask(task)}
                         type="submit"
                         className="rounded bg-blue-600 px-4 py-2 text-white transition-all hover:opacity-80"
                     >

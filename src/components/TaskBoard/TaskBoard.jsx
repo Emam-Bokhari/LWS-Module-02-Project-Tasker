@@ -7,17 +7,17 @@ import TaskModal from "./TaskModal";
 export default function TaskBoard() {
 
     const defaultTask = {
-        "id": crypto.randomUUID(),
-        "title": "Integration API",
-        "description": "Connect an existing API to a third-party database using secure methods and handle data exchange efficiently.",
-        "tags": ["Web", "Python", "Api"],
-        "priority": "High",
-        "isFavourite": true
+        id: crypto.randomUUID(),
+        title: "Integration API",
+        description: "Connect an existing API to a third-party database using secure methods and handle data exchange efficiently.",
+        tags: ["Web", "Python", "Api"],
+        priority: "High",
+        isFavourite: true
     }
 
     const [tasks, setTasks] = useState([defaultTask])
 
-    const [showModal, setShowModal] = useState(true)
+    const [showModal, setShowModal] = useState(false)
 
     function handleAddTask(newTask) {
         console.log(newTask)
@@ -29,10 +29,22 @@ export default function TaskBoard() {
 
     }
 
+    // cancel
+    function handleCancel() {
+        setShowModal(false)
+    }
+
+    // delete task
+    function handleDeleteTask(taskId) {
+        const filteredTask=tasks.filter(task=>task.id!==taskId)
+        setTasks(filteredTask)
+    }
+
+
     return (
         <Fragment>
 
-            {showModal && <TaskModal onSaveTask={handleAddTask} />}
+            {showModal && <TaskModal onSaveTask={handleAddTask} onCancel={handleCancel} />}
 
             <section className="mb-20" id="tasks">
 
@@ -44,7 +56,7 @@ export default function TaskBoard() {
                         <div className="mb-14 items-center justify-between sm:flex">
                             <h2 className="text-2xl font-semibold max-sm:mb-4">Your Tasks</h2>
                             {/* Task actions */}
-                            <TaskActions onAddTask={()=>setShowModal(true)} />
+                            <TaskActions onAddTask={() => setShowModal(true)} />
                         </div>
                         <div className="overflow-auto">
                             <table className="table-fixed overflow-auto xl:w-full">
@@ -60,7 +72,7 @@ export default function TaskBoard() {
                                 </thead>
                                 <tbody>
                                     {/* Task list */}
-                                    <TaskList tasks={tasks} />
+                                    <TaskList tasks={tasks} onDeleteTask={handleDeleteTask} />
 
                                 </tbody>
                             </table>
