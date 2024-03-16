@@ -20,20 +20,38 @@ export default function TaskBoard() {
 
     const [showModal, setShowModal] = useState(false)
 
-    // add new task
-    function handleAddTask(newTask) {
-        console.log(newTask)
-        setTasks([
-            ...tasks,
-            newTask
-        ])
-        setShowModal(false)
+    const [taskToUpdate, setTaskToUpdate] = useState(null)
 
+    // add new task
+    function handleAddTask(newTask,isAdd) {
+        console.log(newTask)
+        if(isAdd){
+            setTasks([
+                ...tasks,
+                newTask
+            ])
+        }else{
+            setTasks(tasks.map((task)=>{
+                if(task.id===newTask.id){
+                    return newTask 
+                }
+                return task
+            }))
+        }
+        setShowModal(false)
+    }
+
+    // edit task
+    function handleEditTask(task) {
+        // console.log(task)
+        setTaskToUpdate(task)
+        setShowModal(true) 
     }
 
     // cancel
     function handleCancel() {
         setShowModal(false)
+        setTaskToUpdate(null)
     }
 
     // delete a task
@@ -59,11 +77,13 @@ export default function TaskBoard() {
 
 
 
-
     return (
         <Fragment>
 
-            {showModal && <TaskModal onSaveTask={handleAddTask} onCancel={handleCancel} />}
+            {showModal && <TaskModal
+                taskToUpdate={taskToUpdate}
+                onSaveTask={handleAddTask}
+                onCancel={handleCancel} />}
 
             <section className="mb-20" id="tasks">
 
@@ -82,7 +102,10 @@ export default function TaskBoard() {
                             {/* Task list */}
                             {tasks.length > 0
                                 ?
-                                <TaskList tasks={tasks} onDeleteTask={handleDeleteTask} />
+                                <TaskList
+                                    onEditTask={handleEditTask}
+                                    tasks={tasks}
+                                    onDeleteTask={handleDeleteTask} />
                                 :
                                 <NoTaskFound />
                             }
