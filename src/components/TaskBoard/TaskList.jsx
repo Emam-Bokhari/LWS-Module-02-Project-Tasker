@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { FaStar } from "react-icons/fa";
 
-export default function TaskList({ tasks, onDeleteTask, onEditTask }) {
+export default function TaskList({ tasks, onDeleteTask, onEditTask,onFavourite }) {
     return (
         <Fragment>
 
@@ -20,7 +20,17 @@ export default function TaskList({ tasks, onDeleteTask, onEditTask }) {
                     {tasks.map((task) => (
                         <tr key={task.id} className="border-b border-[#2E3443] [&>td]:align-baseline [&>td]:px-4 [&>td]:py-2">
 
-                            <td>{task.isFavourite ? <FaStar className="text-xl" color="yellow" /> : < FaStar className="text-xl" color="gray" />}</td>
+                            <td>
+                                <button 
+                                onClick={()=>onFavourite(task.id)}
+                                 >
+                                    {task.isFavourite ?
+                                        <FaStar className="text-xl" color="yellow" />
+                                        :
+                                        < FaStar className="text-xl" color="gray" />}
+                                </button>
+                            </td>
+
                             <td>{task.title}</td>
                             <td>
                                 <div>
@@ -44,9 +54,9 @@ export default function TaskList({ tasks, onDeleteTask, onEditTask }) {
                                     <button
                                         onClick={() => onDeleteTask(task.id)}
                                         className="text-red-500">Delete</button>
-                                    <button 
-                                    onClick={()=>onEditTask(task)}
-                                    className="text-blue-500">Edit</button>
+                                    <button
+                                        onClick={() => onEditTask(task)}
+                                        className="text-blue-500">Edit</button>
                                 </div>
                             </td>
 

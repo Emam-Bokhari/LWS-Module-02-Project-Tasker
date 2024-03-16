@@ -23,17 +23,17 @@ export default function TaskBoard() {
     const [taskToUpdate, setTaskToUpdate] = useState(null)
 
     // add new task
-    function handleAddTask(newTask,isAdd) {
+    function handleAddTask(newTask, isAdd) {
         console.log(newTask)
-        if(isAdd){
+        if (isAdd) {
             setTasks([
                 ...tasks,
                 newTask
             ])
-        }else{
-            setTasks(tasks.map((task)=>{
-                if(task.id===newTask.id){
-                    return newTask 
+        } else {
+            setTasks(tasks.map((task) => {
+                if (task.id === newTask.id) {
+                    return newTask
                 }
                 return task
             }))
@@ -45,7 +45,7 @@ export default function TaskBoard() {
     function handleEditTask(task) {
         // console.log(task)
         setTaskToUpdate(task)
-        setShowModal(true) 
+        setShowModal(true)
     }
 
     // cancel
@@ -72,6 +72,18 @@ export default function TaskBoard() {
     function handleSearch(searchTerm) {
         const search = tasks.filter((task) => task.title.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()))
         setTasks([...search])
+    }
+
+    // favourite task
+    function handleFavouriteTask(taskId) {
+        // console.log(taskId)
+        const taskIndex = tasks.findIndex((task) => task.id === taskId)
+        // console.log(taskIndex)
+        const newTasks = [...tasks]
+
+        newTasks[taskIndex].isFavourite = !newTasks[taskIndex].isFavourite
+
+        setTasks(newTasks)
     }
 
 
@@ -103,6 +115,7 @@ export default function TaskBoard() {
                             {tasks.length > 0
                                 ?
                                 <TaskList
+                                    onFavourite={handleFavouriteTask}
                                     onEditTask={handleEditTask}
                                     tasks={tasks}
                                     onDeleteTask={handleDeleteTask} />
